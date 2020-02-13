@@ -7,12 +7,10 @@ const ArticleSchema = new Schema({
     required: "String is required"
   },
   summary: {
-    type: String,
-    required: "String is required"
+    type: String
   },
   url: {
-    type: String,
-    required: "String is required"
+    type: String
   },
   saved: {
     type: Boolean,
