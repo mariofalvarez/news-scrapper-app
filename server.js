@@ -3,7 +3,7 @@ const app = express()
 const mongoose = require("mongoose")
 const logger = require("morgan")
 const colors = require("colors")
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000
 
 const connection = mongoose.connection
 const MONGODB_URI =
@@ -29,8 +29,8 @@ app.use(express.static("./views"))
 const apiRoutes = require("./routes/api-routes")
 app.use("/api", apiRoutes)
 
-const htmlRoutes = require("./routes/html-routes")
-app.use("/", htmlRoutes)
+// const htmlRoutes = require("./routes/html-routes")
+// app.use("/", htmlRoutes)
 
 app.listen(PORT, () => {
   console.log(`listening at: http://localhost:${PORT}`.bgBlue)
