@@ -4,7 +4,7 @@ const db = require("../models")
 const axios = require("axios")
 const cheerio = require("cheerio")
 
-router.get("/scrapped", (req, res) => {
+router.get("/api", (req, res) => {
   axios
     .get("https://www.nytimes.com/section/technology")
     .then(urlResponse => {
@@ -24,15 +24,14 @@ router.get("/scrapped", (req, res) => {
         result.url =
           "https://www.nytimes.com" +
           $(element)
-            .find("a")
-            .attr("href")
+          .find("a")
+          .attr("href")
 
         collection.push(result)
       })
 
       db.Article.insertMany(collection)
         .then(data => {
-          console.log("yay it works!")
           res.json(data)
         })
         .catch(err => {
@@ -66,21 +65,17 @@ router.get("/scrapped", (req, res) => {
 //     })
 // })
 
-// router.post("/comment/:id", (req, res) => {
-//   db.Comment.create(req.body)
-//     .then(data => {
-//       return db.Article.findOneAndUpdate(
-//         { _id: req.params.id },
-//         { $put: { comment: data._id } },
-//         { new: true }
-//       )
-//     })
-//     .then(data => {
-//       res.json(data)
-//     })
-//     .catch(err => {
-//       res.json(err)
-//     })
-// })
+router.post("/comment/:id", (req, res) => {
+  console.log("params.id", req.params.id)
+  console.log("req.body", req.body.comment)
+
+  db.Article.findByIdAndUpdate({
+    _id: req.params.id
+  }, {
+    $push: {
+      comment: req.body.comment
+    }
+  }).then()
+})
 
 module.exports = router

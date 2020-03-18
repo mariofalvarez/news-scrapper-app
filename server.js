@@ -16,21 +16,24 @@ mongoose.connect(MONGODB_URI, {
 })
 
 connection.on("error", console.error.bind(console, "connection error:"))
-connection.once("open", function() {
+connection.once("open", function () {
   console.log("connected to db instance")
 })
 
 app.use(logger("dev"))
 
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({
+  extended: true
+}))
+
 app.use(express.json())
 app.use(express.static("./views"))
 
 const apiRoutes = require("./routes/api-routes")
 app.use("/api", apiRoutes)
 
-// const htmlRoutes = require("./routes/html-routes")
-// app.use("/", htmlRoutes)
+const htmlRoutes = require("./routes/html-routes")
+app.use("/", htmlRoutes)
 
 app.listen(PORT, () => {
   console.log(`listening at: http://localhost:${PORT}`.bgBlue)

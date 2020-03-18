@@ -2,26 +2,24 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const ArticleSchema = new Schema({
-  headline: {
+  title: {
     type: String,
-    required: "String is required"
+    required: "Title is required"
   },
   summary: {
     type: String
   },
-  url: {
+  link: {
     type: String
   },
   saved: {
     type: Boolean,
     default: false
   },
-  comment: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Comment"
-    }
-  ]
+  comments: {
+    type: [Schema.Types.String],
+    default: []
+  }
 })
 
 const Article = mongoose.model("Article", ArticleSchema)
