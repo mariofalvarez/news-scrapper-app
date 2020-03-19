@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   const saveDataBtn = $(".btn-info")
   const apiKey = "3aBCSv1dJcDYYIPscAas6NkwbAtDgUWF"
 
@@ -12,27 +12,21 @@ $(document).ready(function() {
     console.log(p)
 
     $.ajax({
-      url: "/api/new",
-      method: "POST",
-      data: {
-        title: h3.innerText,
-        description: p.innerText
-      }
-    })
+        url: "/api/new",
+        method: "POST",
+        data: {
+          title: h3.innerText,
+          description: p.innerText
+        }
+      })
       .then(res => console.log("success"))
       .catch(err => console.log(err))
   })
 
   $.ajax(
-    `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${apiKey}`
-  )
+      `https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${apiKey}`
+    )
     .then(res => {
-      console.log(res.results)
-
-      // function saveIt (el) {
-      //     console.log(el)
-      // }
-
       res.results.forEach(el => {
         $("#showData").append(
           `
