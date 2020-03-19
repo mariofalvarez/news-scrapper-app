@@ -4,7 +4,7 @@ $(document).ready(function () {
 
   $(document).on("click", ".btn-info", e => {
     console.log("Click:", e.target.parentElement)
-
+    e.preventDefault();
     let parent = e.target.parentElement
     console.log(parent.querySelector("h3"))
     let h3 = parent.querySelector("h3")
