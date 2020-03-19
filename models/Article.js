@@ -6,20 +6,20 @@ const ArticleSchema = new Schema({
     type: String,
     required: "Title is required"
   },
-  summary: {
+  body: {
     type: String
   },
-  link: {
-    type: String
-  },
-  saved: {
-    type: Boolean,
-    default: false
-  },
-  comments: {
-    type: [Schema.Types.String],
-    default: []
-  }
+  // link: {
+  //   type: String
+  // },
+  // saved: {
+  //   type: Boolean,
+  //   default: false
+  // },
+  // comments: {
+  //   type: [Schema.Types.String],
+  //   default: []
+  // }
 })
 
 const Article = mongoose.model("Article", ArticleSchema)

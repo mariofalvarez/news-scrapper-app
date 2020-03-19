@@ -1,81 +1,26 @@
 const express = require("express")
 const router = express.Router()
-const db = require("../models")
-const axios = require("axios")
-const cheerio = require("cheerio")
+const Article = require('../models/Article')
 
-router.get("/api", (req, res) => {
-  axios
-    .get("https://www.nytimes.com/section/technology")
-    .then(urlResponse => {
-      let $ = cheerio.load(urlResponse.data)
-
-      const collection = []
-
-      $("div.css-1l4spti").each((i, element) => {
-        const result = {}
-
-        result.headline = $(element)
-          .find("h2.e1xfvim30")
-          .text()
-        result.summary = $(element)
-          .find("p.e1xfvim31")
-          .text()
-        result.url =
-          "https://www.nytimes.com" +
-          $(element)
-          .find("a")
-          .attr("href")
-
-        collection.push(result)
-      })
-
-      db.Article.insertMany(collection)
-        .then(data => {
-          res.json(data)
-        })
-        .catch(err => {
-          res.json(err)
-        })
-      console.log(collection)
-    })
-    .catch(err => {
-      res.json(err)
-    })
+router.get("/", (req, res) => {
+  res.send("<h1>Api Route</h1>")
 })
 
-// router.get("/all", (req, res) => {
-//   db.Article.find()
-//     .then(data => {
-//       res.json(data)
-//     })
-//     .catch(err => {
-//       res.json(err)
-//     })
-// })
-
-// router.get("/article/:id", (req, res) => {
-//   db.Article.findById(req.params.id)
-//     .populate("comment")
-//     .then(data => {
-//       res.json(data)
-//     })
-//     .catch(err => {
-//       res.json(err)
-//     })
-// })
-
-router.post("/comment/:id", (req, res) => {
-  console.log("params.id", req.params.id)
-  console.log("req.body", req.body.comment)
-
-  db.Article.findByIdAndUpdate({
-    _id: req.params.id
-  }, {
-    $push: {
-      comment: req.body.comment
-    }
-  }).then()
+router.get('/all', (res, req) => {
+  Article.find().then(res => {
+    res.send(res)
+  }).catch(err => console.log(err))
 })
 
-module.exports = router
+router.post('/new', (req, res) => {
+  console.log('server:', req.body)
+  Article.create({
+    title: req.body.title,
+    description: req.body.description
+  }).then(result => {
+    console.log(result)
+    res.send(result)
+  }).catch(err => console.log(err));
+})
+
+module.exports = router;
